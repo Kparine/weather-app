@@ -3,7 +3,7 @@ import { getLocationData } from "../utils/utils";
 import { SearchContext } from "../context/searchContext";
 
 const Search = () => {
-	const { setData, setDataDisplayed, search, setSearch } = useContext(
+	const { setData, setDataDisplayed, search, setSearch, setIcon } = useContext(
 		SearchContext
 	);
 
@@ -14,6 +14,7 @@ const Search = () => {
 	const handleSubmit = async () => {
 		try {
 			const res = await getLocationData(search);
+			setIcon(res.data.weather[0].icon);
 			setDataDisplayed(true);
 			setData(res.data.main);
 		} catch (err) {

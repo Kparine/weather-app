@@ -8,19 +8,20 @@ export const SearchContext = createContext({});
 const SearchContextProvider = (props) => {
 	const [data, setData] = useState({});
 	const [search, setSearch] = useState("");
+	const [icon, setIcon] = useState("");
 
 	const [dataDisplay, setDataDisplayed] = useState(false);
 
 	const SearchDataContext = {
 		data,
 		setData,
+		icon,
+		setIcon,
 		search,
 		setSearch,
 		dataDisplay,
 		setDataDisplayed,
 	};
-
-	console.log("dataDisplay ******------>>>>>>", dataDisplay);
 
 	return (
 		<SearchContext.Provider value={SearchDataContext}>
