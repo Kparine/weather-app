@@ -2,18 +2,22 @@ import React from "react";
 import "../App.css";
 import Search from "../componenets/Search";
 import Weather from "../componenets/Weather";
-import SearchContextProvider from "../context/searchContext";
+import Header from "../componenets/Header";
+
+import StateContextProvider from "../context/searchContext";
 
 const App = () => {
 	return (
 		<div className="App">
-			<SearchContextProvider>
+			<StateContextProvider>
 				<div className="header-wrapper">
-					<Search />
-					<Weather />
-					<div className="location-wrapper"></div>
+					<Header />
+					<div className="location-wrapper">
+						<Search />
+						<Weather />
+					</div>
 				</div>
-			</SearchContextProvider>
+			</StateContextProvider>
 		</div>
 	);
 };

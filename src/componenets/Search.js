@@ -1,38 +1,41 @@
 import React, { useContext } from "react";
 import { getLocationData } from "../utils/utils";
-import { SearchContext } from "../context/searchContext";
+import { StateContext } from "../context/searchContext";
 
 const Search = () => {
-	const { setData, setDataDisplayed, search, setSearch, setIcon } = useContext(
-		SearchContext
-	);
+	const { state, dispatch } = useContext(StateContext);
+	const { search } = state;
+	console.log("state ******------>>>>>>", state);
+	console.log("search ******------>>>>>>", search);
 
-	const handleChange = (e) => {
-		setSearch(e.target.value);
-	};
-
-	const handleSubmit = async () => {
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 		try {
 			const res = await getLocationData(search);
-			setIcon(res.data.weather[0].icon);
-			setDataDisplayed(true);
-			setData(res.data.main);
+			dispatch({ type: "SET_ICON", payload: res.data.weather[0].icon });
+			dispatch({ type: "SET_LOADING", payload: false });
+			dispatch({ type: "SET_DATA", payload: res.data.main });
 		} catch (err) {
 			console.log("err ******------>>>>>>", err);
 		}
 	};
+	console.log(" ******--StateContext---->>>>>>", StateContext);
 
 	return (
-		<div className="Search">
+		<div className="search-container">
 			<header className="Search-header">
 				<p>Search</p>
-				<input
-					value={search}
-					type="text"
-					onChange={(e) => handleChange(e)}
-				></input>
-				<button onClick={handleSubmit}>Search</button>
 			</header>
+			<div className="search-content">
+				<input
+					// value={search}
+					type="text"
+					onChange={(e) =>
+						dispatch({ type: "SET_SEARCH", payload: e.target.value })
+					}
+				></input>
+				<button onClick={(e) => handleSubmit(e)}>Search</button>
+			</div>
 		</div>
 	);
 };

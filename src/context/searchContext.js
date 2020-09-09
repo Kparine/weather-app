@@ -1,32 +1,70 @@
 // eslint-disable-next-line no-unused-vars
 // @ts-check
 
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer, useMemo, useEffect } from "react";
 
-export const SearchContext = createContext({});
+export const StateContext = createContext({});
 
-const SearchContextProvider = (props) => {
-	const [data, setData] = useState({});
-	const [search, setSearch] = useState("");
-	const [icon, setIcon] = useState("");
+const reducer = (state, action) => {
+	console.log("action ******------>>>>>>", action);
 
-	const [dataDisplay, setDataDisplayed] = useState(false);
+	switch (action.type) {
+		case "SET_LOADING": {
+			return {
+				...state,
+				isLoading: action.payload,
+			};
+		}
+		case "SET_DATA": {
+			return {
+				...state,
+				data: action.payload,
+			};
+		}
+		case "SET_ICON": {
+			return {
+				...state,
+				icon: action.payload,
+			};
+		}
+		case "SET_SEARCH": {
+			return {
+				...state,
+				search: action.payload,
+			};
+		}
+		default:
+			throw new Error();
+	}
+};
 
-	const SearchDataContext = {
-		data,
-		setData,
-		icon,
-		setIcon,
-		search,
-		setSearch,
-		dataDisplay,
-		setDataDisplayed,
-	};
+const initialState = {
+	isLoading: false,
+	data: {},
+	search: "",
+	icon: "",
+};
+
+const StateContextProvider = ({ children }) => {
+	const [state, dispatch] = useReducer(reducer, initialState);
+
+	const contextValue = useMemo(
+		() => ({
+			state,
+			dispatch,
+		}),
+		[state, dispatch]
+	);
+
+	useEffect(() => {
+		console.log("state ******------>>>>>>", state);
+		console.log("contextValue ******------>>>>>>", contextValue);
+	});
 
 	return (
-		<SearchContext.Provider value={SearchDataContext}>
-			{props.children}
-		</SearchContext.Provider>
+		<StateContext.Provider value={contextValue}>
+			{children}
+		</StateContext.Provider>
 	);
 };
-export default SearchContextProvider;
+export default StateContextProvider;
