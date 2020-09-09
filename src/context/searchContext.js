@@ -1,13 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 // @ts-check
 
-import React, { createContext, useReducer, useMemo, useEffect } from "react";
+import React, { createContext, useReducer, useMemo } from "react";
 
 export const StateContext = createContext({});
 
 const reducer = (state, action) => {
-	console.log("action ******------>>>>>>", action);
-
 	switch (action.type) {
 		case "SET_LOADING": {
 			return {
@@ -55,11 +53,6 @@ const StateContextProvider = ({ children }) => {
 		}),
 		[state, dispatch]
 	);
-
-	useEffect(() => {
-		console.log("state ******------>>>>>>", state);
-		console.log("contextValue ******------>>>>>>", contextValue);
-	});
 
 	return (
 		<StateContext.Provider value={contextValue}>

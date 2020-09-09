@@ -5,8 +5,6 @@ import { StateContext } from "../context/searchContext";
 const Search = () => {
 	const { state, dispatch } = useContext(StateContext);
 	const { search } = state;
-	console.log("state ******------>>>>>>", state);
-	console.log("search ******------>>>>>>", search);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -19,7 +17,6 @@ const Search = () => {
 			console.log("err ******------>>>>>>", err);
 		}
 	};
-	console.log(" ******--StateContext---->>>>>>", StateContext);
 
 	return (
 		<div className="search-container">
@@ -28,7 +25,7 @@ const Search = () => {
 			</header>
 			<div className="search-content">
 				<input
-					// value={search}
+					value={search}
 					type="text"
 					onChange={(e) =>
 						dispatch({ type: "SET_SEARCH", payload: e.target.value })

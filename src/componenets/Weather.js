@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { StateContext } from "../context/searchContext";
 
 const Weather = () => {
-	const { isLoading } = useContext(StateContext);
-	console.log(" ******------>>>>>>", isLoading);
+	const { state } = useContext(StateContext);
+	const { data, isLoading, icon } = state;
 
-	// if (!isLoading && !Object.keys(data).length) return null;
+	if (!isLoading && !Object.keys(data).length) return null;
 
 	return (
 		<div>
-			{/* <div>
+			<div>
 				<img
 					alt="/"
 					src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
@@ -28,7 +28,7 @@ const Weather = () => {
 				Min Temp: {data.temp_min} F<sup>o</sup>
 			</div>
 			<div>Humidity: {data.humidity} %</div>
-			<div>Pressure: {data.temp} in</div> */}
+			<div>Pressure: {data.temp} in</div>
 		</div>
 	);
 };
